@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.env
+.env.*
+.manus-logs
+*.manus-starter-*
+**/target
+.pnpm-store
+coverage
+*.zip
+postgres-data

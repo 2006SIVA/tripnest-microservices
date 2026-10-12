@@ -1,0 +1,8 @@
+packages:
+  - 'shell'
+  - 'user-ui'
+  - 'travel-ui'
+  - 'hotel-ui'
+  - 'transport-ui'
+  - 'booking-ui'
+  - 'payment-ui'

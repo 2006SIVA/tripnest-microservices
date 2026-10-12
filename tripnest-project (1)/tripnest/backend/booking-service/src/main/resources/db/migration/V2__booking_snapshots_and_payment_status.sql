@@ -1,0 +1,17 @@
+ALTER TABLE bookings ADD COLUMN destination_id BIGINT;
+ALTER TABLE bookings ADD COLUMN destination_name VARCHAR(160);
+ALTER TABLE bookings ADD COLUMN package_name VARCHAR(160);
+ALTER TABLE bookings ADD COLUMN hotel_name VARCHAR(160);
+ALTER TABLE bookings ADD COLUMN transport_name VARCHAR(160);
+ALTER TABLE bookings ADD COLUMN guests INTEGER NOT NULL DEFAULT 1 CHECK(guests > 0);
+ALTER TABLE bookings ADD COLUMN package_unit_price NUMERIC(12,2) NOT NULL DEFAULT 0 CHECK(package_unit_price >= 0);
+ALTER TABLE bookings ADD COLUMN hotel_nightly_price NUMERIC(12,2) NOT NULL DEFAULT 0 CHECK(hotel_nightly_price >= 0);
+ALTER TABLE bookings ADD COLUMN transport_unit_price NUMERIC(12,2) NOT NULL DEFAULT 0 CHECK(transport_unit_price >= 0);
+ALTER TABLE bookings ADD COLUMN destination_unit_price NUMERIC(12,2) NOT NULL DEFAULT 0 CHECK(destination_unit_price >= 0);
+ALTER TABLE bookings ADD COLUMN inventory_cleanup_required BOOLEAN NOT NULL DEFAULT false;
+ALTER TABLE bookings ADD COLUMN payment_status VARCHAR(20) NOT NULL DEFAULT 'UNPAID';
+CREATE INDEX idx_bookings_user_created ON bookings(user_id, created_at DESC);
+CREATE INDEX idx_bookings_status_created ON bookings(status, created_at DESC);
+ALTER TABLE bookings ADD CONSTRAINT ck_bookings_total_nonnegative CHECK (total >= 0);
+ALTER TABLE bookings ADD CONSTRAINT ck_bookings_status CHECK (status IN ('PENDING_PAYMENT','CONFIRMED','CANCELLED'));
+ALTER TABLE bookings ADD CONSTRAINT ck_bookings_payment_status CHECK (payment_status IN ('UNPAID','SUCCEEDED','FAILED'));

@@ -1,0 +1,8 @@
+import React,{useEffect,useState} from 'react';
+import {createRoot} from 'react-dom/client';
+import './style.css';
+const API=import.meta.env.VITE_API_BASE||'http://localhost:8080';
+async function request(path,opts={}){const r=await fetch(API+path,{headers:{'Content-Type':'application/json',...(opts.headers||{})},...opts});if(!r.ok)throw new Error('API '+r.status);return r.status===204?null:r.json()}
+function Header({name}){return <header><a href="http://localhost:5173" className="brand">tripnest<span>.</span></a><strong>{name}</strong><nav><a href="http://localhost:5173">Shell</a><a href="http://localhost:5174">User</a><a href="http://localhost:5175">Travel</a><a href="http://localhost:5176">Hotel</a><a href="http://localhost:5177">Transport</a><a href="http://localhost:5178">Booking</a><a href="http://localhost:5179">Payment</a></nav></header>}
+function App(){return <><Header name="Hotel UI"/><main><p className="eyebrow">INDEPENDENT UI • hotel</p><h1>Hotel UI</h1><p className="lead">This UI is independently buildable and deployable. It communicates with its own backend domain through the API Gateway.</p><section className="card"><h2>Service endpoint</h2><code>/api/v1/hotels</code><div className="actions"><button onClick={async()=>{try{const d=await request('/api/v1/hotels');document.getElementById('out').textContent=JSON.stringify(d,null,2)}catch(e){document.getElementById('out').textContent=e.message}}}>Load service data</button></div><pre id="out">Click “Load service data” to call the service.</pre></section></main></>}
+createRoot(document.getElementById('root')).render(<App/>);

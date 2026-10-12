@@ -1,0 +1,1 @@
+CREATE TABLE bookings(id BIGSERIAL PRIMARY KEY,confirmation_code VARCHAR(40) UNIQUE,user_id BIGINT NOT NULL,package_id BIGINT,hotel_id BIGINT,transport_id BIGINT,start_date DATE NOT NULL,end_date DATE NOT NULL,status VARCHAR(24) NOT NULL,total NUMERIC(12,2) NOT NULL,payment_reference VARCHAR(100),created_at TIMESTAMPTZ NOT NULL DEFAULT now(),CHECK(end_date>start_date));
